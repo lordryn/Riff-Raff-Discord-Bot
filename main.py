@@ -6,7 +6,7 @@ import random
 
 # grabs discord bot token from .env file and initializes
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+my_secret = os.environ['DISCORD_TOKEN']
 client = discord.Client()
 
 
@@ -152,5 +152,5 @@ async def on_message(message):
         # await message.add_reaction(emoji)
 
 
-client.run(TOKEN)
+client.run(my_secret)
 #
