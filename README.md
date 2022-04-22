@@ -1,5 +1,5 @@
 # Riff-Raff-Discord-Bot
-A bot designed for the Misfit Marauders discord channel with raffling functionality via reactions
+A bot designed for the Misfit Marauders discord channel with raffling functionality via reactions\n
         !help - this menu(list of commands)
         !raffle - chooses a user that reacts to a post*
         !list - lists all users who react to a post*
