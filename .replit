@@ -1,2 +1,2 @@
 language = "python3"
-run = "start"
+run='bash -c echo creating migrations && python main.py makemigrations && echo running migrations && python main.py migrate && echo running server && python main.py runserver 0.0.0.0:8000'

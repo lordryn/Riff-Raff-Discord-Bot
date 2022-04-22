@@ -13,13 +13,15 @@ client = discord.Client()
 @client.event
 # debug items done after successful bot startup/reboot
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')  # discord connection verified
+    print(f'{client.user} has connected to Discord!'
+          )  # discord connection verified
 
 
 @client.event
 # constantly monitors all channels the bot has access to and responds to keywords accordingly
 async def on_message(message):
-    username = str(message.author).split('#')[0]  # username grab and removal of discriminator
+    username = str(message.author).split('#')[
+        0]  # username grab and removal of discriminator
     user_message = str(message.content)
     channel = str(message.channel.name)
 
@@ -29,8 +31,11 @@ async def on_message(message):
 
     # identifies bot dev
     if username.lower() == 'lord ryn':
-        emojis = ['<:LawRune:962174931502759936>', '<:BloodRune:962173212001726474>',
-                  '<:SoulRune:962165403948318812>', '<:NatureRune:962165392141344849>']
+        emojis = [
+            '<:LawRune:962174931502759936>', '<:BloodRune:962173212001726474>',
+            '<:SoulRune:962165403948318812>',
+            '<:NatureRune:962165392141344849>'
+        ]
 
         # adds emojis from above list
         for emoji in emojis:
@@ -91,7 +96,8 @@ async def on_message(message):
                 users.add(user)
 
         # user's names are extracted and posted
-        await message.channel.send(f"users: {', '.join(user.name for user in users)}")
+        await message.channel.send(
+            f"users: {', '.join(user.name for user in users)}")
         print(f"users: {', '.join(user.name for user in users)}")
 
     # the main show, the raffle
@@ -127,15 +133,19 @@ async def on_message(message):
             # takes the userdata and commits the usernames to the database
             contestants = []
             for entrant in users:
-                cur.execute('''INSERT INTO Name (name)
-                    VALUES ( ? )''', (str(entrant),))
-                cur.execute('SELECT id FROM Name WHERE name = ? ', (str(entrant),))
-                entrant_id = cur.fetchone()[0]  # came with the sqlite raffle code, but has no known usage
+                cur.execute(
+                    '''INSERT INTO Name (name)
+                    VALUES ( ? )''', (str(entrant), ))
+                cur.execute('SELECT id FROM Name WHERE name = ? ',
+                            (str(entrant), ))
+                entrant_id = cur.fetchone(
+                )[0]  # came with the sqlite raffle code, but has no known usage
                 conn.commit()
                 contestants.append(entrant)  # debugging list of entrants
 
             # picks a winner
-            cur.execute('''SELECT name FROM Name ORDER BY RANDOM() LIMIT 1''')  # there is room to have multiple winners
+            cur.execute('''SELECT name FROM Name ORDER BY RANDOM() LIMIT 1'''
+                        )  # there is room to have multiple winners
             winner = cur.fetchone()[0]
 
             # debug print
