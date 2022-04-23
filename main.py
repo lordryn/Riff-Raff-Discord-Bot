@@ -52,7 +52,6 @@ async def on_message(message):
         !poll - currently adds a thumbs up and down to post\n
         *list and raffle require you to be replying to the target post\n
         *raffle currently only works in a channel named 🎫weekly-raffle
-        
         """
         await message.channel.send(cmds)
 
@@ -60,7 +59,7 @@ async def on_message(message):
     if user_message.lower() == 'good bot':
         print(f'{username}->{user_message}')
         await message.channel.send('💖')
-        # todo add db access to tally affirmations
+    # todo add db access to tally affirmations
 
     # negative reaction to mark poor experience
     if user_message.lower() == 'bad bot':
@@ -76,8 +75,8 @@ async def on_message(message):
 
     # generates a random number
     elif user_message.lower() == '!random' or user_message.lower() == '!rand':
-		random_number = random.randrange(100)
-		print(f'{username}->{user_message}->{random_number}')
+        random_number = random.randrange(100)
+        print(f'{username}->{user_message}->{random_number}')
         response = f'I have chosen: {random_number}'  # todo add ability to specify the range
         await message.channel.send(response)
 
@@ -85,13 +84,13 @@ async def on_message(message):
     if user_message.lower().split(' ')[0] == '!poll':
         # todo? add number to specify multiple choice
         yn_emojis = ['\N{THUMBS UP SIGN}', '\N{THUMBS DOWN SIGN}']
-		print(f'{username}->{user_message}')
+        print(f'{username}->{user_message}')
         for emoji in yn_emojis:
             await message.add_reaction(emoji)
 
     # lists users that react to a post
     if user_message.lower() == '!list':
-		print(f'{username}->{user_message}')
+        print(f'{username}->{user_message}')
         msg_id = message.reference.message_id  # targets replied message
         chan = message.channel
         msg = await chan.fetch_message(msg_id)  # grabs target id
@@ -112,20 +111,20 @@ async def on_message(message):
 
         # raffle init
         if user_message.lower() == '!raffle':
-			print(f'{username}->{user_message}')
+            print(f'{username}->{user_message}')
 
             # sqlite database connect
             conn = sqlite3.connect('raffle.sqlite')
             cur = conn.cursor()
 
             # clears name table for fresh raffle
-            cur.executescript('''
-            DROP TABLE IF EXISTS Name;
-            CREATE TABLE Name (
-                id     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-                name   TEXT
-            );
-            ''')
+            cur.executescript('\n'
+                              '			DROP TABLE IF EXISTS Name;\n'
+                              '			CREATE TABLE Name (\n'
+                              '				id     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n'
+                              '				name   TEXT\n'
+                              '			);\n'
+                              '			')
 
             # Discord message scrape
             msg_id = message.reference.message_id
@@ -142,10 +141,10 @@ async def on_message(message):
             contestants = []
             for entrant in users:
                 cur.execute(
-                    '''INSERT INTO Name (name)
-                    VALUES ( ? )''', (str(entrant), ))
+                    'INSERT INTO Name (name)\n'
+                    '					VALUES ( ? )', (str(entrant),))
                 cur.execute('SELECT id FROM Name WHERE name = ? ',
-                            (str(entrant), ))
+                            (str(entrant),))
                 entrant_id = cur.fetchone(
                 )[0]  # came with the sqlite raffle code, but has no known usage
                 conn.commit()
@@ -159,16 +158,15 @@ async def on_message(message):
             # results message construction and push
             number_of_contestants = len(contestants)
             result = f"Out of {number_of_contestants} contestants, {winner} has won the raffle!"
-			await message.channel.send(result)
+            await message.channel.send(result)
 
-			# debug print
+            # debug print
             print(contestants)
             print(result)
-            
 
-        # print('coined')
-        # emoji = '<:GP:962161665229619210>'
-        # await message.add_reaction(emoji)
+    # print('coined')
+    # emoji = '<:GP:962161665229619210>'
+    # await message.add_reaction(emoji)
 
 
 client.run(my_secret)
