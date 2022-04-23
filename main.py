@@ -37,9 +37,9 @@ async def on_message(message):
     #         '<:NatureRune:962165392141344849>'
     #     ]
 
-        # # adds emojis from above list
-        # for emoji in emojis:
-        #     await message.add_reaction(emoji)
+    # # adds emojis from above list
+    # for emoji in emojis:
+    #     await message.add_reaction(emoji)
 
     # help list of current commands, secret commands omitted
     if user_message.lower() == '!help':
@@ -58,33 +58,40 @@ async def on_message(message):
 
     # reacts to positive affirmation
     if user_message.lower() == 'good bot':
+        print(f'{username}->{user_message}')
         await message.channel.send('💖')
         # todo add db access to tally affirmations
 
     # negative reaction to mark poor experience
     if user_message.lower() == 'bad bot':
+        print(f'{username}->{user_message}')
         await message.channel.send('😔')
 
     # todo add suggestions command
 
     # bot greeting for testing
     if user_message.lower() == 'hello riff raff':
+        print(f'{username}->{user_message}')
         await message.channel.send(f'Hello {username}')
 
     # generates a random number
     elif user_message.lower() == '!random' or user_message.lower() == '!rand':
-        response = f'I have chosen: {random.randrange(100)}'  # todo add ability to specify the range
+		random_number = random.randrange(100)
+		print(f'{username}->{user_message}->{random_number}')
+        response = f'I have chosen: {random_number}'  # todo add ability to specify the range
         await message.channel.send(response)
 
     # polling, thumbs up or down
     if user_message.lower().split(' ')[0] == '!poll':
         # todo? add number to specify multiple choice
         yn_emojis = ['\N{THUMBS UP SIGN}', '\N{THUMBS DOWN SIGN}']
+		print(f'{username}->{user_message}')
         for emoji in yn_emojis:
             await message.add_reaction(emoji)
 
     # lists users that react to a post
     if user_message.lower() == '!list':
+		print(f'{username}->{user_message}')
         msg_id = message.reference.message_id  # targets replied message
         chan = message.channel
         msg = await chan.fetch_message(msg_id)  # grabs target id
@@ -105,6 +112,7 @@ async def on_message(message):
 
         # raffle init
         if user_message.lower() == '!raffle':
+			print(f'{username}->{user_message}')
 
             # sqlite database connect
             conn = sqlite3.connect('raffle.sqlite')
@@ -148,14 +156,15 @@ async def on_message(message):
                         )  # there is room to have multiple winners
             winner = cur.fetchone()[0]
 
-            # debug print
-            print(contestants)
-            print(winner + " is the winner!")
-
             # results message construction and push
             number_of_contestants = len(contestants)
             result = f"Out of {number_of_contestants} contestants, {winner} has won the raffle!"
-            await message.channel.send(result)
+			await message.channel.send(result)
+
+			# debug print
+            print(contestants)
+            print(result)
+            
 
         # print('coined')
         # emoji = '<:GP:962161665229619210>'
