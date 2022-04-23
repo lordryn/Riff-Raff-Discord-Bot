@@ -29,17 +29,17 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # identifies bot dev
-    if username.lower() == 'lord ryn':
-        emojis = [
-            '<:LawRune:962174931502759936>', '<:BloodRune:962173212001726474>',
-            '<:SoulRune:962165403948318812>',
-            '<:NatureRune:962165392141344849>'
-        ]
+    # identifies bot dev, destroys bot lol
+    # if username.lower() == 'lord ryn':
+    #     emojis = [
+    #         '<:LawRune:962174931502759936>', '<:BloodRune:962173212001726474>',
+    #         '<:SoulRune:962165403948318812>',
+    #         '<:NatureRune:962165392141344849>'
+    #     ]
 
-        # adds emojis from above list
-        for emoji in emojis:
-            await message.add_reaction(emoji)
+        # # adds emojis from above list
+        # for emoji in emojis:
+        #     await message.add_reaction(emoji)
 
     # help list of current commands, secret commands omitted
     if user_message.lower() == '!help':
