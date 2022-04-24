@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import discord
+import pytz as pytz
 from dotenv import load_dotenv
 import random
 import datetime
@@ -18,10 +19,11 @@ async def on_ready():
     print(f'{client.user} has connected to Discord!'
           )  # discord connection verified
     while True:
-        now = datetime.datetime.now()
+        cst = pytz.timezone('US/Central')
+        now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
-
         print(now.hour)
+        print(now.weekday())
         if now.weekday() == 4 and now.hour == 19:  # todo fix this
             announcement = 'A weekly reset has occurred!'
             print(announcement)
