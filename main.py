@@ -23,7 +23,7 @@ async def on_ready():
         now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
 
-        if now.weekday() == 4 and now.hour == 19:  # todo fix this
+        if now.weekday() == 4 and now.hour == 19 and now.minute == 00:  # todo fix this
             announcement = 'A weekly reset has occurred!'
             print(announcement)
             await an_chan.send(announcement)
@@ -31,7 +31,7 @@ async def on_ready():
             announcement = 'A daily reset has occurred!'
             print(announcement)
             await an_chan.send(announcement)
-        await asyncio.sleep(30)
+        await asyncio.sleep(60)
 
 
 
