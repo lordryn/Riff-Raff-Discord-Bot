@@ -85,6 +85,11 @@ async def on_message(message):
         await message.channel.send('😔')
 
     # todo add suggestions command
+    if user_message.lower().split(' ')[0] == '!rswiki':
+        command_removed = user_message.lower().replace('!rswiki', '')
+        item = command_removed.replace(' ','_')
+        link= f'https://runescape.wiki/w/{item}'
+        await message.channel.send(f'Results for: {command_removed}\n  {link}')
 
     # bot greeting for testing
     if user_message.lower() == 'hello riff raff':
@@ -190,6 +195,7 @@ async def on_message(message):
         announcement =''
     if user_message.lower().split(' ')[0] == '!chanid':
         await message.channel.send(channel)
+
     # weekly event
 
 
