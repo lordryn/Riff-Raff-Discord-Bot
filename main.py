@@ -42,7 +42,7 @@ async def on_message(message):
     #     await message.add_reaction(emoji)
 
     # help list of current commands, secret commands omitted
-    if user_message.lower() == '!help':
+    if user_message.lower().split(' ')[0] == '!help':
         cmds = """Riff Raff Raffler by Lord Ryn \n
         Designed for the Misfit Marauders Discord\n
         !help - this menu(list of commands)\n
@@ -74,8 +74,15 @@ async def on_message(message):
         await message.channel.send(f'Hello {username}')
 
     # generates a random number
-    elif user_message.lower() == '!random' or user_message.lower() == '!rand':
-        random_number = random.randrange(100)
+    elif user_message.lower().split(' ')[0] == '!random' or user_message.lower().split(' ')[0] == '!rand':
+        print(user_message.lower().split(' ')[0])
+        try:
+            print('setting randrange')
+            randrange = int(user_message.lower().split(' ')[1])
+            print('randrange set')
+        except IndexError:
+            randrange = 100
+        random_number = random.randrange(randrange)
         print(f'{username}->{user_message}->{random_number}')
         response = f'I have chosen: {random_number}'  # todo add ability to specify the range
         await message.channel.send(response)
@@ -89,7 +96,7 @@ async def on_message(message):
             await message.add_reaction(emoji)
 
     # lists users that react to a post
-    if user_message.lower() == '!list':
+    if user_message.lower().split(' ')[0] == '!list':
         print(f'{username}->{user_message}')
         msg_id = message.reference.message_id  # targets replied message
         chan = message.channel
@@ -110,7 +117,7 @@ async def on_message(message):
     if message.channel.name == '🎫weekly-raffle':  # channel prerequisite, more may be added using and
 
         # raffle init
-        if user_message.lower() == '!raffle':
+        if user_message.lower().split(' ')[0] == '!raffle':
             print(f'{username}->{user_message}')
 
             # sqlite database connect
