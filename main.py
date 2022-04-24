@@ -4,6 +4,7 @@ import discord
 from dotenv import load_dotenv
 import random
 import datetime
+import asyncio
 
 # grabs discord bot token from .env file and initializes
 load_dotenv()
@@ -16,6 +17,21 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} has connected to Discord!'
           )  # discord connection verified
+    while True:
+        now = datetime.datetime.now()
+        an_chan = client.get_channel(947328202483830794)
+
+        print(now.hour)
+        if now.weekday() == 4 and now.hour == 19:  # todo fix this
+            announcement = 'A weekly reset has occurred!'
+            print(announcement)
+            await an_chan.send(announcement)
+        elif now.hour == 19 and now.minute == 00:
+            announcement = 'A daily reset has occurred!'
+            print(announcement)
+            await an_chan.send(announcement)
+        await asyncio.sleep(30)
+
 
 
 @client.event
@@ -172,13 +188,9 @@ async def on_message(message):
     if user_message.lower().split(' ')[0] == '!announce': # todo make anouncements work
         announcement =''
     if user_message.lower().split(' ')[0] == '!chanid':
-        now = datetime.datetime.today().weekday()
         await message.channel.send(channel)
     # weekly event
-    if now == 5:  # todo fix this
-        an_chan = client.get_channel(947328202483830794)
-        announcement = 'It is saturday, this is a test!'
-        await an_chan.send(announcement)
+
 
 client.run(my_secret)
 #
