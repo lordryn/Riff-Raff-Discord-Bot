@@ -3,6 +3,7 @@ import os
 import discord
 from dotenv import load_dotenv
 import random
+import datetime
 
 # grabs discord bot token from .env file and initializes
 load_dotenv()
@@ -23,7 +24,7 @@ async def on_message(message):
     username = str(message.author).split('#')[
         0]  # username grab and removal of discriminator
     user_message = str(message.content)
-    channel = str(message.channel.name)
+    channel = str(message.channel.id)
 
     # omits bot chats
     if message.author == client.user:
@@ -168,11 +169,16 @@ async def on_message(message):
             # debug print
             print(contestants)
             print(result)
-
-    # print('coined')
-    # emoji = '<:GP:962161665229619210>'
-    # await message.add_reaction(emoji)
-
+    if user_message.lower().split(' ')[0] == '!announce': # todo make anouncements work
+        announcement =''
+    if user_message.lower().split(' ')[0] == '!chanid':
+        now = datetime.datetime.today().weekday()
+        await message.channel.send(channel)
+    # weekly event
+    if now == 5:  # todo fix this
+        an_chan = client.get_channel(947328202483830794)
+        announcement = 'It is saturday, this is a test!'
+        await an_chan.send(announcement)
 
 client.run(my_secret)
 #
