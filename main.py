@@ -47,18 +47,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # identifies bot dev, destroys bot lol
-    # if username.lower() == 'lord ryn':
-    #     emojis = [
-    #         '<:LawRune:962174931502759936>', '<:BloodRune:962173212001726474>',
-    #         '<:SoulRune:962165403948318812>',
-    #         '<:NatureRune:962165392141344849>'
-    #     ]
-
-    # # adds emojis from above list
-    # for emoji in emojis:
-    #     await message.add_reaction(emoji)
-
     # help list of current commands, secret commands omitted
     if user_message.lower().split(' ')[0] == '!help':
         cmds = """Riff Raff Raffler by Lord Ryn \n
@@ -68,6 +56,7 @@ async def on_message(message):
         !list - lists all users who react to a post*\n
         !rand or !random - chooses a random number 1-100\n
         !poll - currently adds a thumbs up and down to post\n
+				!rswiki - creates a link based on post command text\n
         *list and raffle require you to be replying to the target post\n
         *raffle currently only works in a channel named 🎫weekly-raffle
         """
@@ -85,10 +74,13 @@ async def on_message(message):
         await message.channel.send('😔')
 
     # todo add suggestions command
+
+		# converts post command text to rswiki link
     if user_message.lower().split(' ')[0] == '!rswiki':
-        command_removed = user_message.lower().replace('!rswiki', '')
+        command_removed = user_message.lower().replace('!rswiki ', '')
         item = command_removed.replace(' ','_')
         link= f'https://runescape.wiki/w/{item}'
+        print(f'{username}->{item}->{link}')
         await message.channel.send(f'Results for: {command_removed}\n  {link}')
 
     # bot greeting for testing
