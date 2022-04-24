@@ -8,6 +8,7 @@ authors = ["lordryn <<>>"]
 python = "^3.8"
 python-dotenv = "^0.20.0"
 discord = "^1.7.3"
+pytz = "^2022.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -22,8 +22,7 @@ async def on_ready():
         cst = pytz.timezone('US/Central')
         now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
-        print(now.hour)
-        print(now.weekday())
+
         if now.weekday() == 4 and now.hour == 19:  # todo fix this
             announcement = 'A weekly reset has occurred!'
             print(announcement)
