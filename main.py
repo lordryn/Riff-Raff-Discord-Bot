@@ -77,14 +77,12 @@ async def on_message(message):
     elif user_message.lower().split(' ')[0] == '!random' or user_message.lower().split(' ')[0] == '!rand':
         print(user_message.lower().split(' ')[0])
         try:
-            print('setting randrange')
             randrange = int(user_message.lower().split(' ')[1])
-            print('randrange set')
         except IndexError:
             randrange = 100
         random_number = random.randrange(randrange)
         print(f'{username}->{user_message}->{random_number}')
-        response = f'I have chosen: {random_number}'  # todo add ability to specify the range
+        response = f'From 1-{randrange} I have chosen: {random_number}'  # todo add ability to specify the range
         await message.channel.send(response)
 
     # polling, thumbs up or down
