@@ -18,20 +18,26 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} has connected to Discord!'
           )  # discord connection verified
+
+    # time retrieval loop
     while True:
         cst = pytz.timezone('US/Central')
         now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
-
-        if now.weekday() == 4 and now.hour == 19 and now.minute == 00:  # todo fix this
+        refresh_time = 60 # time refresh rate in minutes
+        
+        # daily and weekly announcements
+        if now.weekday() == 4 and now.hour == 19 and now.minute == 00: 
             announcement = 'A weekly reset has occurred!'
             print(announcement)
             await an_chan.send(announcement)
-        elif now.hour == 19 and now.minute == 00:
+            refresh_time = 120
+        if now.hour == 19 and now.minute == 00:
             announcement = 'A daily reset has occurred!'
             print(announcement)
             await an_chan.send(announcement)
-        await asyncio.sleep(60)
+            refresh_time = 120
+        await asyncio.sleep(refresh_time)
 
 
 
@@ -56,7 +62,7 @@ async def on_message(message):
         !list - lists all users who react to a post*\n
         !rand or !random - chooses a random number 1-100\n
         !poll - currently adds a thumbs up and down to post\n
-				!rswiki - creates a link based on post command text\n
+		!rswiki - creates a link based on post command text\n
         *list and raffle require you to be replying to the target post\n
         *raffle currently only works in a channel named 🎫weekly-raffle
         """
@@ -165,8 +171,6 @@ async def on_message(message):
                     '					VALUES ( ? )', (str(entrant),))
                 cur.execute('SELECT id FROM Name WHERE name = ? ',
                             (str(entrant),))
-                entrant_id = cur.fetchone(
-                )[0]  # came with the sqlite raffle code, but has no known usage
                 conn.commit()
                 contestants.append(entrant)  # debugging list of entrants
 
@@ -179,7 +183,7 @@ async def on_message(message):
             number_of_contestants = len(contestants)
             result = f"Out of {number_of_contestants} contestants, {winner} has won the raffle!"
             await message.channel.send(result)
-
+            
             # debug print
             print(contestants)
             print(result)
