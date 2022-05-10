@@ -27,15 +27,20 @@ async def on_ready():
         refresh_time = 60 # time refresh rate in minutes
         
         # daily and weekly announcements
-        if now.weekday() == 4 and now.hour == 19 and now.minute == 00: 
-            announcement = 'A weekly reset has occurred!'
-            print(announcement)
-            await an_chan.send(announcement)
-            refresh_time = 120
+
+
         if now.hour == 19 and now.minute == 00:
-            announcement = 'A daily reset has occurred!'
+            announcement = 'A daily reset has occurrered!\n Don\'t forget You\'re daily challenges and free keys today!'
             print(announcement)
+            if now.weekday() == 1: 
+                announcement = 'A weekly reset has occurred!'
             await an_chan.send(announcement)
+            if now.weekday() == 3:
+                announcement = '''Weekly cit build tick!\n
+                      Don't forget to help cap the resources for the cit raffle!\n
+                      Don't forget to use your clan cape xp!\n
+                      Don't forget to collect your xp from the quartermaster after capping!\n
+                      '''
             refresh_time = 120
         await asyncio.sleep(refresh_time)
 
@@ -133,7 +138,7 @@ async def on_message(message):
         print(f"users: {', '.join(user.name for user in users)}")
 
     # the main show, the raffle
-    if message.channel.name == '🎫weekly-raffle':  # channel prerequisite, more may be added using and
+    if message.channel.name != '#💬general':  # channel prerequisite, more may be added using and
 
         # raffle init
         if user_message.lower().split(' ')[0] == '!raffle':
