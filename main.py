@@ -24,7 +24,7 @@ async def on_ready():
         cst = pytz.timezone('US/Central')
         now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
-        refresh_time = 60 # time refresh rate in minutes
+        refresh_time = 60 # time refresh rate in seconds
         
         # daily and weekly announcements
 
@@ -193,7 +193,7 @@ async def on_message(message):
             print(contestants)
             print(result)
     if user_message.lower().split(' ')[0] == '!announce': # todo make anouncements work
-        announcement =''
+        announcement = ''
     if user_message.lower().split(' ')[0] == '!chanid':
         await message.channel.send(channel)
 
