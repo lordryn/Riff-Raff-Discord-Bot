@@ -46,15 +46,18 @@ async def on_ready():
 
 @client.event
 async def on_raw_reaction_add(payload):
-    rules_message_id = 1111111111
-
-    if rules_message_id == payload.message_id:
+    rules_message_id = 976710530540650537
+    
+    if rules_message_id == payload.message_id: 
+        print(f"new member->{payload.member}")
         member = payload.member
         guild = member.guild
-        emoji = payload.emoji.name
-        if emoji == '👍':
-            role = discord.utils.get(guild.roles, name='Member')
+        print(member.name)
+        #emoji = payload.emoji.name
+        #if emoji == '👍':
+        role = discord.utils.get(guild.roles, name='Member')
         await member.add_roles(role)
+       
 
 
 
