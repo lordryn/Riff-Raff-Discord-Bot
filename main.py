@@ -46,19 +46,22 @@ async def on_ready():
 
 @client.event
 async def on_raw_reaction_add(payload):
-    rules_message_id = 976710530540650537
-    
-    if rules_message_id == payload.message_id: 
+    rules_message_id = 976923160387682358
+
+    if rules_message_id == payload.message_id:
         print(f"new member->{payload.member}")
         member = payload.member
         guild = member.guild
         print(member.name)
-        #emoji = payload.emoji.name
-        #if emoji == '👍':
+        # emoji = payload.emoji.name
+        # if emoji == '👍':
         role = discord.utils.get(guild.roles, name='Member')
         await member.add_roles(role)
-       
 
+@client.event
+async def on_member_remove(member):
+    channel = client.get_channel(762921541787975686)
+    await channel.send(f"{member} quit on the 1 yard line (left the server).")
 
 
 @client.event
@@ -82,7 +85,7 @@ async def on_message(message):
         !list - lists all users who react to a post*\n
         !rand or !random - chooses a random number 1-100\n
         !poll - currently adds a thumbs up and down to post\n
-		!rswiki - creates a link based on post command text\n
+        !rswiki - creates a link based on post command text\n
         *list and raffle require you to be replying to the target post\n
         *raffle currently only works in a channel named 🎫weekly-raffle
         """
