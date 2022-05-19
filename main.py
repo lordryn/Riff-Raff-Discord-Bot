@@ -24,15 +24,14 @@ async def on_ready():
         cst = pytz.timezone('US/Central')
         now = datetime.datetime.now(cst)
         an_chan = client.get_channel(947328202483830794)
-        refresh_time = 60 # time refresh rate in seconds
-        
-        # daily and weekly announcements
+        refresh_time = 60  # time refresh rate in seconds
 
+        # daily and weekly announcements
 
         if now.hour == 19 and now.minute == 00:
             announcement = 'A daily reset has occurrered!\n Don\'t forget You\'re daily challenges and free keys today!'
             print(announcement)
-            if now.weekday() == 1: 
+            if now.weekday() == 1:
                 announcement = 'A weekly reset has occurred!'
             await an_chan.send(announcement)
             if now.weekday() == 3:
@@ -43,6 +42,19 @@ async def on_ready():
                       '''
             refresh_time = 120
         await asyncio.sleep(refresh_time)
+
+
+@client.event
+async def on_raw_reaction_add(payload):
+    rules_message_id = 1111111111
+
+    if rules_message_id == payload.message_id:
+        member = payload.member
+        guild = member.guild
+        emoji = payload.emoji.name
+        if emoji == '👍':
+            role = discord.utils.get(guild.roles, name='Member')
+        await member.add_roles(role)
 
 
 
@@ -86,11 +98,11 @@ async def on_message(message):
 
     # todo add suggestions command
 
-		# converts post command text to rswiki link
+    # converts post command text to rswiki link
     if user_message.lower().split(' ')[0] == '!rswiki':
         command_removed = user_message.lower().replace('!rswiki ', '')
-        item = command_removed.replace(' ','_')
-        link= f'https://runescape.wiki/w/{item}'
+        item = command_removed.replace(' ', '_')
+        link = f'https://runescape.wiki/w/{item}'
         print(f'{username}->{item}->{link}')
         await message.channel.send(f'Results for: {command_removed}\n  {link}')
 
@@ -188,11 +200,11 @@ async def on_message(message):
             number_of_contestants = len(contestants)
             result = f"Out of {number_of_contestants} contestants, {winner} has won the raffle!"
             await message.channel.send(result)
-            
+
             # debug print
             print(contestants)
             print(result)
-    if user_message.lower().split(' ')[0] == '!announce': # todo make anouncements work
+    if user_message.lower().split(' ')[0] == '!announce':  # todo make anouncements work
         announcement = ''
     if user_message.lower().split(' ')[0] == '!chanid':
         await message.channel.send(channel)
