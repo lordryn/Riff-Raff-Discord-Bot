@@ -7,10 +7,13 @@ import random
 import datetime
 import asyncio
 
+intents = discord.Intents.all()
+
+
 # grabs discord bot token from .env file and initializes
 load_dotenv()
 my_secret = os.environ['DISCORD_TOKEN']
-client = discord.Client()
+client = discord.Client(intents=intents)
 
 
 @client.event
@@ -18,6 +21,8 @@ client = discord.Client()
 async def on_ready():
     print(f'{client.user} has connected to Discord!'
           )  # discord connection verified
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the misfits and influencing elections on Facebook"))
+
 
     # time retrieval loop
     while True:
@@ -60,8 +65,11 @@ async def on_raw_reaction_add(payload):
 
 @client.event
 async def on_member_remove(member):
-    channel = client.get_channel(762921541787975686)
-    await channel.send(f"{member} quit on the 1 yard line (left the server).")
+    leave_list = ['went to the wildy and never came back', 'forgot to bring waterskins to the desert', 'was dominated by the KBD', 'lost a 1v1 with Zezima', 'failed to many agility obstacles']
+    channel = client.get_channel(976928345897963600)
+    print(f"{member.name}->left")
+    await channel.send(f"{member} {leave_list[random.randint(0, 4)]}.")
+
 
 
 @client.event
