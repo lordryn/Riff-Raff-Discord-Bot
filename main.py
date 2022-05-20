@@ -117,7 +117,7 @@ async def on_message(message):
     if user_message.lower().split(' ')[0] == '!bonghit':
         ma_id = '<@542436163395387407>'
         emoji = '977020269682106419'
-        await message.react(emoji)
+        await message.add_reaction(emoji)
         await message.chanel.send(f'{ma_id} {username} has redeemed a bong hit!')
 
     # converts post command text to rswiki link
