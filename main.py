@@ -116,7 +116,7 @@ async def on_message(message):
     # todo add suggestions command
     if user_message.lower().split(' ')[0] == '!bonghit':
         ma_id = '<@542436163395387407>'
-        emoji = '977020269682106419'
+        emoji = get(message.server.emojis, name="BongHit")#'977020269682106419'
         await message.add_reaction(emoji)
         await message.chanel.send(f'{ma_id} {username} has redeemed a bong hit!')
 
