@@ -65,10 +65,11 @@ async def on_raw_reaction_add(payload):
 
 @client.event
 async def on_member_remove(member):
-    leave_list = ['went to the wildy and never came back', 'forgot to bring waterskins to the desert', 'was dominated by the KBD', 'lost a 1v1 with Zezima', 'failed to many agility obstacles']
+    leave_list = ['went to the wildy and never came back', 'forgot to bring waterskins to the desert', 'was dominated by the KBD', 'lost a 1v1 with Zezima', 'failed to many agility obstacles', ' was found by seasonal elf', 'Changed their title to "The Betrayed"']
     channel = client.get_channel(976928345897963600)
+    list_length = len(leave_list) - 1
     print(f"{member.name}->left")
-    await channel.send(f"{member} {leave_list[random.randint(0, 4)]}.")
+    await channel.send(f"{member} {leave_list[random.randint(0, list_length)]}.")
 
 
 
